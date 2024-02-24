@@ -1,27 +1,24 @@
 package com.market.security.models;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.market.app.dataModels.Region;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name="users")
 @Getter
+@Setter
 public class ApplicationUser implements UserDetails{
 
     @Id
@@ -30,6 +27,18 @@ public class ApplicationUser implements UserDetails{
     @Column(unique=true)
     private String username;
     private String password;
+    private String mobileNumber;
+    private String address;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "region_id")
+    private Region region;
+
+     @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
@@ -45,12 +54,16 @@ public class ApplicationUser implements UserDetails{
     }
 
 
-    public ApplicationUser(Integer userId, String username, String password, Set<Role> authorities) {
+    public ApplicationUser(Integer userId, String username, String password, Set<Role> authorities ,String mobileNumber, String address,Region region ) {
         super();
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
+        this.mobileNumber = mobileNumber;
+        this.address = address;
+        this.region = region;
+
     }
 
 
@@ -93,5 +106,7 @@ public class ApplicationUser implements UserDetails{
     public boolean isEnabled() {
          return true;
     }
+
+
 
 }

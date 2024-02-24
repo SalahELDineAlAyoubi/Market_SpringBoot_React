@@ -4,6 +4,8 @@ package com.market.security.services;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.market.app.dataModels.Region;
+import com.market.app.repositories.RegionRepository;
 import com.market.security.models.ApplicationUser;
 import com.market.security.models.LoginResponseDTO;
 import com.market.security.models.Role;
@@ -29,6 +31,8 @@ public class AuthenticationService {
 
     @Autowired
     private RoleRepository roleRepository;
+ @Autowired
+    private RegionRepository regionRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -39,16 +43,18 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public ApplicationUser registerUser(String username, String password){
+    public ApplicationUser registerUser(String username, String password,String mobileNumber, String address ){
 
         String encodedPassword = passwordEncoder.encode(password);
         Role userRole = roleRepository.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();
+         authorities.add(userRole);
 
-        authorities.add(userRole);
-
-        return userRepository.save(new ApplicationUser(0, username, encodedPassword, authorities));
+        String regionName = address.split(",")[0].trim();
+        Region region = regionRepository.findByName(regionName);
+        ApplicationUser  newUser =     new ApplicationUser(0, username, encodedPassword, authorities,mobileNumber,address,region);
+        return userRepository.save(newUser);
     }
 
     public LoginResponseDTO loginUser(String username, String password){
