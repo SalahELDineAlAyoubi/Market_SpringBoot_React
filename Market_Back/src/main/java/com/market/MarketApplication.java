@@ -47,12 +47,12 @@ public class MarketApplication {
 			Region region7 = new Region(7, "Kalim");
 			Region region8 = new Region(8, "Zeki");
 			Region region9 = new Region(9, "Krami");
+			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncode.encode("password"), roles,null,null,null);
 
 			regionRepository.saveAll(Arrays.asList(region1,
 					         region2, region3,region4,region5,region6,region7,region8,region9));
 
 
-			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncode.encode("password"), roles,null,null,region1);
  			userRepository.save(admin);
 		};
 	}

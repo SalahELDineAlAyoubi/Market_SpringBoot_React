@@ -2,6 +2,7 @@ package com.market.security.services;
 
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import com.market.app.dataModels.Region;
@@ -52,8 +53,8 @@ public class AuthenticationService {
          authorities.add(userRole);
 
         String regionName = address.split(",")[0].trim();
-        Region region = regionRepository.findByName(regionName);
-        ApplicationUser  newUser =     new ApplicationUser(0, username, encodedPassword, authorities,mobileNumber,address,region);
+        Optional<Region> region = regionRepository.findByName(regionName);
+        ApplicationUser  newUser =     new ApplicationUser(0, username, encodedPassword, authorities,mobileNumber,address,region.get());
         return userRepository.save(newUser);
     }
 
