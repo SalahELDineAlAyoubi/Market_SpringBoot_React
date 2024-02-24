@@ -7,6 +7,7 @@ import com.market.app.dataModels.Region;
 import com.market.app.dto.Request.ProductDtoRequest;
 import com.market.app.dto.Response.ProductDtoResponse;
 import com.market.app.dto.Response.RegionDtoResponse;
+import com.market.app.exceptions.NotFoundException;
 import com.market.app.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,7 +35,7 @@ public class ProductService {
 
 
 
-    public ProductDtoResponse addProduct(ProductDtoRequest request) {
+    public ProductDtoResponse addProduct(ProductDtoRequest request, MultipartFile imageFile) {
 
         var productDtoResponse =new ProductDtoResponse();
         Optional<Product> existingProduct = productRepository.findByName(request.getName());
@@ -43,7 +45,12 @@ public class ProductService {
             productDtoResponse.message="Product Already Exist";
             return productDtoResponse ;
         }
-       Product entity =  this.productMapper.toEntity(request);
+
+        String imageUrl = uploadImage(imageFile);
+        request.setImageUrl(imageUrl);
+
+
+        Product entity =  this.productMapper.toEntity(request);
          productRepository.save(entity);
         productDtoResponse.isSuccess=true;
         productDtoResponse.message="Product Added successfully";
@@ -51,9 +58,38 @@ public class ProductService {
         return  productDtoResponse;
     }
 
+   public List<ProductDtoRequest> getAllProducts(){
+       List<Product> all = this.productRepository.findAll();
+       if(all.isEmpty()){
+           return null ;
+       }
+       return this.productMapper.toDTOs(all);
+
+   }
 
 
+    public  ProductDtoRequest  getProductById(Integer productId) {
+        Optional<Product> reg =  productRepository.findById(productId);
 
+        if(reg.isPresent()){
+            return  productMapper.toDTO(reg.get());
+        }
+         else {
+            throw new NotFoundException("Student not found - "+ productId);
+        }
+
+    }
+
+
+/*
+    public  ProductDtoRequest  updateProduct( ProductDtoRequest request) {
+
+
+        Product  entity = productMapper.toEntity(request);
+
+        return productMapper.toDTO(productRepository.save(entity)) ;
+
+    }*/
 
 
 
@@ -74,6 +110,15 @@ public class ProductService {
             throw new RuntimeException("Failed to store file", e);
         }
     }
+
+
+//Tmp method Test
+    public boolean deleteAllproducts( ) {
+
+        productRepository.deleteAll();
+return  true ;
+    }
+
 }
 
 

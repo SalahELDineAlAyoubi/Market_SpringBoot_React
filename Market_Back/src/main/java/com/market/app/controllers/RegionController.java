@@ -40,13 +40,11 @@ public class RegionController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("add-region/{regionName}")
     public  ResponseEntity<?>  addRegion( @PathVariable("regionName") String regionName){
-
+if(regionName.isEmpty()){
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Name ");
+}
         var result =  regionService.addRegion(regionName);
-        if(result != null) {
             return ResponseEntity.ok(result);
-        }
-        else   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Region already Exist");
-
 
     }
 

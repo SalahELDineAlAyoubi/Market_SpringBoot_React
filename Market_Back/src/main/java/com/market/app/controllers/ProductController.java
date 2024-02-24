@@ -16,15 +16,17 @@ public class ProductController {
 
 
 
-    @PostMapping("add-product")
-    public  ResponseEntity<?>  addRegion(@RequestBody ProductDtoRequest request ){
+    @PostMapping("add")
+    public  ResponseEntity<?>  AddRegion(@ModelAttribute ProductDtoRequest request ,
+                                         @RequestParam("image") MultipartFile imageFile)
+    {
 
-        if(request.getName().isEmpty() || request.getImageUrl().isEmpty()){
+        if(request.getName().isEmpty()  ){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Info");
         }
 
 
-        var result =  productService.addProduct(request);
+        var result =  productService.addProduct(request,imageFile);
         if(result.isSuccess) {
             return ResponseEntity.ok(result.message);
         }
@@ -33,20 +35,53 @@ public class ProductController {
 
     }
 
+    @GetMapping("")
+    public  ResponseEntity<?>  GetAllProducts()
+    {
+
+        var result =  productService.getAllProducts();
+        if(result != null) {
+            return ResponseEntity.ok(result);
+        }
+        else   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No products");
 
 
+    }
 
+    @GetMapping("{productId}")
+    public ResponseEntity<?>  getProduct(@PathVariable Integer productId) {
+        var result= productService.getProductById(productId);
+         return ResponseEntity.ok(result);
+    }
+/*
+    @PutMapping("")
+    public ResponseEntity<?> UpdateProduct(@RequestBody ProductDtoRequest request ) {
+
+        var result= productService.updateProduct(request);
+
+        return ResponseEntity.ok(result);
+    }
+*/
 
 
 
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> UploadImage(@RequestParam("file") MultipartFile file) {
         String imageUrl = productService.uploadImage(file);
         return ResponseEntity.ok(imageUrl);
     }
 
 
 
+
+//Tmp method
+    @DeleteMapping("delete-all")
+    public  ResponseEntity<?>  deleteAllProducts()
+    {
+        var result =  productService.deleteAllproducts();
+        return ResponseEntity.ok(result);
+
+    }
 
 }

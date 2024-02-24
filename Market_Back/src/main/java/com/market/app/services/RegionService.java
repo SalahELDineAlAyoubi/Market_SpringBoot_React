@@ -3,6 +3,8 @@ package com.market.app.services;
 import com.market.app.Mappers.RegionMapper;
 import com.market.app.dataModels.Region;
 import com.market.app.dto.Response.RegionDtoResponse;
+import com.market.app.exceptions.AlreadyExistException;
+import com.market.app.exceptions.NotFoundException;
 import com.market.app.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,12 +29,12 @@ public class RegionService {
     }
 
 
-    public  RegionDtoResponse  getRegionById(Integer regionId) {
-       Optional<Region> reg =  regionRepo.findById(regionId);
+    public RegionDtoResponse getRegionById(Integer regionId) {
+        Optional<Region> reg = regionRepo.findById(regionId);
         if (reg.isPresent()) {
-            return  regionMapper.toDto(reg.get());
+            return regionMapper.toDto(reg.get());
         } else {
-            return null;
+            throw new NotFoundException("region not found - "+ regionId);
         }
 
     }
@@ -54,7 +56,7 @@ public class RegionService {
         Optional<Region> existingRegion = regionRepo.findByName(regionName);
 
         if (existingRegion.isPresent()) {
-            return null ;
+            throw new AlreadyExistException("Region already exist with this name : "+ regionName);
         }
 
         Region entity = new Region();

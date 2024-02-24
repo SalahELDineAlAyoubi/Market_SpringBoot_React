@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 @Data
 public class ProductDtoRequest {
+
     private String name;
     private double price;
     private int quantity;
