@@ -24,6 +24,7 @@ public class Region {
     private Integer id;
     @Column(name = "region_name")
     private String name;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
