@@ -1,0 +1,61 @@
+   header.masthead {
+       text-align: center;
+       color: white;
+        background-image: url('../../../img/Home5.png');
+       background-repeat: no-repeat;
+       background-attachment: scroll;
+       background-position: center center;
+       background-size: cover;
+
+       padding-top: 300px;
+       padding-bottom: 200px;
+    }
+
+   .heightAdder {
+       height: 1000px;
+   }
+
+   @media (min-width: 100px) {
+       #mainNav {
+           padding-top: 25px;
+           padding-bottom: 25px;
+           -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
+           -moz-transition: padding-top 0.3s, padding-bottom 0.3s;
+           transition: padding-top 0.3s, padding-bottom 0.3s;
+           border: none;
+           background-color: transparent;
+       }
+
+       #mainNav .navbar-brand {
+           font-size: 1.75em;
+           -webkit-transition: all 0.3s;
+           -moz-transition: all 0.3s;
+           transition: all 0.3s;
+       }
+
+       #mainNav .navbar-nav .nav-item .nav-link {
+           padding: 1.1em 1em !important;
+                  text-decoration: none;
+
+       }
+  #mainNav    {
+      padding-left: 2em;
+  }
+       #mainNav.navbar-shrink {
+           padding-top: 0;
+           padding-bottom: 0;
+           /* background-color:#ba5808 ; */
+            background-color:#de6807 ;  
+       }
+
+       #mainNav.navbar-shrink .navbar-brand {
+           font-size: 1.25em;
+           padding: 12px 0;
+       }
+   }
+
+ 
+
+ 
+   
+ 
