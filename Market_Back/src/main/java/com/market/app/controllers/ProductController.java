@@ -16,9 +16,10 @@ public class ProductController {
 
 
 
-    @PostMapping("add")
+    @PostMapping("add/{categoryId}")
     public  ResponseEntity<?>  AddProduct(@ModelAttribute ProductDtoRequest request ,
-                                         @RequestParam("image") MultipartFile imageFile)
+                                         @RequestParam("image") MultipartFile imageFile,
+                                          @PathVariable Integer categoryId)
     {
 
         if(request.getName().isEmpty()  ){
@@ -26,7 +27,7 @@ public class ProductController {
         }
 
 
-        var result =  productService.addProduct(request,imageFile);
+        var result =  productService.addProduct(request,imageFile,categoryId);
             return ResponseEntity.ok(result);
     }
 

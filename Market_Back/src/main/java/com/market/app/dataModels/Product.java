@@ -1,5 +1,6 @@
 package com.market.app.dataModels;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -38,10 +39,12 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
- /*   @ManyToOne
+    @JsonIgnore
+
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-*/
+
     public Product(String name, double price, int quantity, String imageUrl) {
         this.name = name;
         this.price = price;

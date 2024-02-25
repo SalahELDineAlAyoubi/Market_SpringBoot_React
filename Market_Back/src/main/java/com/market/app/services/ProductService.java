@@ -2,6 +2,7 @@ package com.market.app.services;
 
 import com.market.app.Mappers.ProductMapper;
 import com.market.app.Mappers.RegionMapper;
+import com.market.app.dataModels.Category;
 import com.market.app.dataModels.Product;
 import com.market.app.dataModels.Region;
 import com.market.app.dto.Request.ProductDtoRequest;
@@ -9,6 +10,7 @@ import com.market.app.dto.Response.ProductDtoResponse;
 import com.market.app.dto.Response.RegionDtoResponse;
 import com.market.app.exceptions.AlreadyExistException;
 import com.market.app.exceptions.NotFoundException;
+import com.market.app.repositories.CategoryRepository;
 import com.market.app.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +32,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
     @Qualifier("productMapperImp")
 
     private ProductMapper productMapper;
@@ -39,19 +43,25 @@ public class ProductService {
 
 
 
-    public ProductDtoResponse addProduct(ProductDtoRequest request, MultipartFile imageFile) {
+    public ProductDtoResponse addProduct(ProductDtoRequest request, MultipartFile imageFile ,Integer categoryId) {
 
          Optional<Product> existingProduct = productRepository.findByName(request.getName());
 
         if (existingProduct.isPresent()) {
             throw new AlreadyExistException("Product already exist with this name - "+ request.getName());
         }
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+        if (categoryOptional.isEmpty()) {
+            throw new NotFoundException("Category Not Found - " + categoryId);
+        }
 
         String imageUrl = uploadImage(imageFile);
         request.setImageUrl(imageUrl);
 
+            Category category = categoryOptional.get();
 
         Product entity =  this.productMapper.toEntity(request);
+        entity.setCategory(category);
          productRepository.save(entity);
 
 

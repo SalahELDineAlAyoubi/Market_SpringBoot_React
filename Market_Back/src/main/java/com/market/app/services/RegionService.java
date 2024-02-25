@@ -28,6 +28,11 @@ public class RegionService {
         List<Region> all = this.regionRepo.findAll();
             return this.regionMapper.toDTOs(all);
     }
+   public List<Region> getAllRegionsIncludeUser (){
+
+        List<Region> all = this.regionRepo.findAll();
+            return all;
+    }
 
 
     public RegionDtoResponse getRegionById(Integer regionId) {

@@ -29,6 +29,7 @@ public class Category {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
  }
