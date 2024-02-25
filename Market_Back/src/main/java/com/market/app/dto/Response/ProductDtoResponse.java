@@ -2,6 +2,9 @@ package com.market.app.dto.Response;
 
 import lombok.*;
 
+
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -9,6 +12,12 @@ import lombok.*;
 @Builder
 @Data
 public class ProductDtoResponse {
-    public String message ;
-    public  boolean isSuccess;
+
+    private Integer id;
+    private String name;
+    private double price;
+    private int quantity;
+    private String imageUrl;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

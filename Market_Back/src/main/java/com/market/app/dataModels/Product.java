@@ -38,7 +38,10 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-
+ /*   @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+*/
     public Product(String name, double price, int quantity, String imageUrl) {
         this.name = name;
         this.price = price;

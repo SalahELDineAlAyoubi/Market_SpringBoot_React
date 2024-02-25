@@ -7,6 +7,7 @@ import com.market.app.exceptions.AlreadyExistException;
 import com.market.app.exceptions.NotFoundException;
 import com.market.app.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class RegionService {
     @Autowired
     private RegionRepository regionRepo ;
     @Autowired
-
+    @Qualifier("regionMapperImp")
     private  RegionMapper regionMapper;
 
     public List<RegionDtoResponse> getAllRegions (){

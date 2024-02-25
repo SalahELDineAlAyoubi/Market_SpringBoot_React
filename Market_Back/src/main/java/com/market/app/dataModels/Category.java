@@ -9,33 +9,26 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "regions")
+@Table(name = "categories")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-
-public class Region {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "region_id")
+    @Column(name = "category_id")
     private Integer id;
-    @Column(name = "region_name")
+
+    @Column(name = "category_name")
     private String name;
 
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-   @OneToMany(mappedBy = "region")
-    private List<ApplicationUser> users;
 
 
-    public Region(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-}
-
+ }

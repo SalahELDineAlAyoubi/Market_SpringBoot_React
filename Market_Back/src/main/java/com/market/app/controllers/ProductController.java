@@ -17,7 +17,7 @@ public class ProductController {
 
 
     @PostMapping("add")
-    public  ResponseEntity<?>  AddRegion(@ModelAttribute ProductDtoRequest request ,
+    public  ResponseEntity<?>  AddProduct(@ModelAttribute ProductDtoRequest request ,
                                          @RequestParam("image") MultipartFile imageFile)
     {
 
@@ -27,12 +27,7 @@ public class ProductController {
 
 
         var result =  productService.addProduct(request,imageFile);
-        if(result.isSuccess) {
-            return ResponseEntity.ok(result.message);
-        }
-        else   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result.message);
-
-
+            return ResponseEntity.ok(result);
     }
 
     @GetMapping("")

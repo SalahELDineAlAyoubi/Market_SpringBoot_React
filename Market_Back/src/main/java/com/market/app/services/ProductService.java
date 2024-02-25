@@ -7,9 +7,11 @@ import com.market.app.dataModels.Region;
 import com.market.app.dto.Request.ProductDtoRequest;
 import com.market.app.dto.Response.ProductDtoResponse;
 import com.market.app.dto.Response.RegionDtoResponse;
+import com.market.app.exceptions.AlreadyExistException;
 import com.market.app.exceptions.NotFoundException;
 import com.market.app.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
+    @Qualifier("productMapperImp")
+
     private ProductMapper productMapper;
     @Value("${upload.dir}")
     private String uploadDir;
@@ -37,13 +41,10 @@ public class ProductService {
 
     public ProductDtoResponse addProduct(ProductDtoRequest request, MultipartFile imageFile) {
 
-        var productDtoResponse =new ProductDtoResponse();
-        Optional<Product> existingProduct = productRepository.findByName(request.getName());
+         Optional<Product> existingProduct = productRepository.findByName(request.getName());
 
         if (existingProduct.isPresent()) {
-            productDtoResponse.isSuccess=false;
-            productDtoResponse.message="Product Already Exist";
-            return productDtoResponse ;
+            throw new AlreadyExistException("Product already exist with this name - "+ request.getName());
         }
 
         String imageUrl = uploadImage(imageFile);
@@ -52,13 +53,12 @@ public class ProductService {
 
         Product entity =  this.productMapper.toEntity(request);
          productRepository.save(entity);
-        productDtoResponse.isSuccess=true;
-        productDtoResponse.message="Product Added successfully";
 
-        return  productDtoResponse;
+
+        return  productMapper.toResDto(entity);
     }
 
-   public List<ProductDtoRequest> getAllProducts(){
+   public List<ProductDtoResponse> getAllProducts(){
        List<Product> all = this.productRepository.findAll();
        if(all.isEmpty()){
            return null ;
@@ -75,7 +75,7 @@ public class ProductService {
             return  productMapper.toDTO(reg.get());
         }
          else {
-            throw new NotFoundException("Student not found - "+ productId);
+            throw new NotFoundException("Product not found - "+ productId);
         }
 
     }
@@ -113,7 +113,7 @@ public class ProductService {
 
 
 //Tmp method Test
-    public boolean deleteAllproducts( ) {
+    public boolean deleteAllproducts() {
 
         productRepository.deleteAll();
 return  true ;
