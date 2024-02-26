@@ -3,8 +3,9 @@ import {
   applyMiddleware,
   compose,
 } from "redux";
-import thunk from "redux-thunk";
+ 
 import { reducers } from "../reducers";
+import { thunk } from "redux-thunk";
 
 function saveToLocalStorage(store) {
   try {

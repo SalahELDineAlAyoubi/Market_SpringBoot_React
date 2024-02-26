@@ -3,6 +3,7 @@ import "./Navbar.css";
  
 import jquery from 'jquery';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { logout } from '../../redux/actions/AuthAction';
 
 const Navbar = () => {
     const location = useLocation();
@@ -76,59 +77,71 @@ const Navbar = () => {
     })(jquery);
   }, [location.pathname]);
 
+  const handleCloseLogout = () => {
+     dispatchEvent(logout());
+  };
    
   return (
-      <div id="top">
-        <nav
-          className="navbar navbar-expand-md navbar-dark   fixed-top"
-          id="mainNav"
-        >
-          <div className="container  ">
-            <Link to={"/"} className="navbar-brand js-scroll-trigger" href="#top">
-              Koura Store
-            </Link>
-            <button
-              className="navbar-toggler navbar-toggler-right"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarResponsive"
-              aria-controls="navbarResponsive"
-              aria-expanded="false"
-              aria-label="Toggle Navigation"
-            >
-              Menu <i className="fa fa-bars"></i>
-            </button>
-            <div className="collapse navbar-collapse " id="navbarResponsive">
-              <ul className="navbar-nav text-uppercase ml-auto  ">
-                <li className="nav-item">
-                  <Link to={"/"} className="nav-link js-scroll-trigger " href="#l">
-                    Home
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    to={"/"}
-                    className="nav-link js-scroll-trigger"
-                  
-                  >
-                    Users
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={"/"} className="nav-link js-scroll-trigger">
-                    Categories
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={"/login"} className="nav-link js-scroll-trigger">
-                    Login
-                  </Link>
-                </li>
-              </ul>
-            </div>
+    <div id="top">
+      <nav
+        className="navbar navbar-expand-md navbar-dark   fixed-top"
+        id="mainNav"
+      >
+        <div className="container  ">
+          <Link to={"/"} className="navbar-brand js-scroll-trigger" href="#top">
+            Koura Store
+          </Link>
+          <button
+            className="navbar-toggler navbar-toggler-right"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarResponsive"
+            aria-controls="navbarResponsive"
+            aria-expanded="false"
+            aria-label="Toggle Navigation"
+          >
+            Menu <i className="fa fa-bars"></i>
+          </button>
+          <div className="collapse navbar-collapse " id="navbarResponsive">
+            <ul className="navbar-nav text-uppercase ml-auto  ">
+              <li className="nav-item">
+                <Link
+                  to={"/"}
+                  className="nav-link js-scroll-trigger "
+                  href="#l"
+                >
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/"} className="nav-link js-scroll-trigger">
+                  Users
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/"} className="nav-link js-scroll-trigger">
+                  Categories
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/login"} className="nav-link js-scroll-trigger">
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to={"/login"}
+                  onClick={handleCloseLogout}
+                  className="nav-link js-scroll-trigger"
+                >
+                  LogOut
+                </Link>
+              </li>
+            </ul>
           </div>
-        </nav>
-      </div>
+        </div>
+      </nav>
+    </div>
   );
 };
 

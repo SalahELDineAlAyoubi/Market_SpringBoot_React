@@ -4,10 +4,11 @@ export const logIn = (formData) => async (dispatch) => {
   dispatch({ type: "AUTH_START" });
   try {
     const { data } = await AuthApi.logIn(formData);
+   console.log(data)
     dispatch({ type: "AUTH_SUCCESS", data: data });
   } catch (error) {
     const errorMessage = error.response.data;
-   // console.log(error.response.data);
+ 
     dispatch({ type: "AUTH_FAIL", payload: errorMessage });
   }
 };
