@@ -1,0 +1,38 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+ 
+#card-img-top {
+    border-radius: 50px;
+    padding: 20px;
+}
+
+#card1 {
+    border-radius: 30px;
+    box-shadow: rgba(226, 212, 212, 0.1) 0px 1px 2px 0px;
+}
+
+#card-body {
+    padding: 25px;
+    margin-top: -15px;
+}
+
+#btn-primary {
+    border-radius: 50px;
+    width: 120px;
+    background-color: rgb(213, 96, 12);
+        border: none;
+}
+
+#btn-primary:hover {
+    background-color: rgba(5, 8, 62, 0.367);
+    border: none;
+}
+
+h3,
+h5 {
+    color: rgb(0, 91, 228);
+}

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import "./Login.css";
 import jquery from 'jquery';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   useEffect(() => {
@@ -21,7 +22,7 @@ const goTologin = () => {
       <div class="container" id="container">
         <div class="form-container sign-up">
           <form>
-            <h1>Create Account</h1>
+            <h1 className="h1Login">Create Account</h1>
              
              <input type="text" placeholder="Name" />
             <input type="email" placeholder="Email" />
@@ -31,25 +32,25 @@ const goTologin = () => {
         </div>
         <div class="form-container sign-in">
           <form>
-            <h1>Sign In</h1>
+            <h1 className="h1Login">Sign In</h1>
             
              <input type="email" placeholder="Email" />
             <input type="password" placeholder="Password" />
-            <a href="">Forgot your email or password?</a>
+            <Link className='aLogin' href="">Forgot your email or password?</Link>
             <button>Sign in</button>
           </form>
         </div>
         <div class="toggle-container">
           <div class="toggle">
             <div class="toggle-panel toggle-left">
-              <h1>Welcome Back!</h1>
+              <h1 className="h1Login">Welcome Back!</h1>
               <p>Enter your personal details to use all of site features</p>
               <button  onClick={goTologin} class="hidden" id="login">
                 Sign In
               </button>
             </div>
             <div class="toggle-panel toggle-right">
-              <h1>Hello, User!</h1>
+              <h1 className="h1Login">Hello, User!</h1>
               <p>
                 Register with your personal details to use all of site features
               </p>

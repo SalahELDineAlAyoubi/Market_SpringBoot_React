@@ -238,13 +238,13 @@
         border-radius: 75px 0 0 50px;
         z-index: 500;
     }
-    h1 {
+        .h1Login {
         font-size: 20px;
     }
     .span{
         font-size: 3px;
     }
-    a {
+    .aLogin {
         font-size: 5px;
     }
     #container form {
