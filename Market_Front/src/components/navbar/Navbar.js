@@ -1,14 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Navbar.css";
  
 import jquery from 'jquery';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { logout } from '../../redux/actions/AuthAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocalStorage } from 'react-use-storage';
 
 const Navbar = () => {
     const location = useLocation();
+        const data = useSelector((state) => state.authReducer.authData) || {}; 
+  const [islogin, setislogin, removeislogin] = useLocalStorage("islogin");
+//const [isAdmin, setisAdmin, removeisAdmin] = useLocalStorage("isAdmin", false);
+    const dispatch = useDispatch();
+   const [isAdmin, setIsAdmin] = useState(false);
 
+ 
+   useEffect(() => {
+     setIsAdmin(data.user?.authorities[0]?.roleId === 1);
+   }, [isAdmin, data]);
+console.log( isAdmin );
   useEffect(() => {
+    
     (function ($) {
       "use strict";
 
@@ -55,13 +68,11 @@ const Navbar = () => {
           } else {
             $("#mainNav").removeClass("navbar-shrink");
           }
-        }else{
-        $("#mainNav").addClass("navbar-shrink");
+        } else {
+          $("#mainNav").addClass("navbar-shrink");
         }
-      }
-      
-                   
- 
+      };
+
       // Collapse now if page is not at top
       navbarCollapse();
       // Collapse the navbar when page is scrolled
@@ -78,7 +89,7 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const handleCloseLogout = () => {
-     dispatchEvent(logout());
+    dispatch(logout());
   };
    
   return (
@@ -113,30 +124,41 @@ const Navbar = () => {
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to={"/"} className="nav-link js-scroll-trigger">
-                  Users
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/"} className="nav-link js-scroll-trigger">
-                  Categories
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/login"} className="nav-link js-scroll-trigger">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  to={"/login"}
-                  onClick={handleCloseLogout}
-                  className="nav-link js-scroll-trigger"
-                >
-                  LogOut
-                </Link>
-              </li>
+              {isAdmin ? (
+                <li className="nav-item">
+                  <Link to={"/"} className="nav-link js-scroll-trigger">
+                    Users
+                  </Link>
+                </li>
+              ) : (
+                <div></div>
+              )}
+              { isAdmin ? (
+                <li className="nav-item">
+                  <Link to={"/"} className="nav-link js-scroll-trigger">
+                    Categories
+                  </Link>
+                </li>
+              ) : (
+                <div></div>
+              )}
+              {islogin && data?.user ? (
+                <li className="nav-item">
+                  <Link
+                    to={"/login"}
+                    onClick={handleCloseLogout}
+                    className="nav-link js-scroll-trigger"
+                  >
+                    LogOut
+                  </Link>
+                </li>
+              ) : (
+                <li className="nav-item">
+                  <Link to={"/login"} className="nav-link js-scroll-trigger">
+                    Login
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>

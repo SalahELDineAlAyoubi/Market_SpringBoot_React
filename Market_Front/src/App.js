@@ -7,17 +7,23 @@ import Navbar from './components/navbar/Navbar';
  import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import { useSelector } from 'react-redux';
+import { useLocalStorage } from 'react-use-storage';
 
 function App() {
-    const user = useSelector((state) => state.authReducer.authData);
+    const data = useSelector((state) => state.authReducer.authData);
+  const [islogin, setislogin, removeislogin] = useLocalStorage("islogin");
 
   return (
     <div className="App">
-      <Navbar  />
+      <Navbar />
 
       <Routes>
-       <Route path="/" element={<Home />}></Route>
-        <Route path="/login" element={!user ?<Login/> :<Navigate to="../" /> }></Route>
+        <Route path="/" element={<Home />}></Route>
+        {/* <Route path="/login" element={<Login />}></Route> */}
+        <Route
+          path="/login"
+          element={data?.user? <Navigate to="../" /> : <Login />}
+        ></Route>
         <Route path="*" element={<Home />}></Route>
       </Routes>
     </div>

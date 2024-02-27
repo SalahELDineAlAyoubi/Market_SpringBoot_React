@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin("*")
+
 public class ProductController {
     @Autowired
     private ProductService productService;

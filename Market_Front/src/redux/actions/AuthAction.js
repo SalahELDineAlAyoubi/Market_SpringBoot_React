@@ -18,6 +18,12 @@ export const signUp = (formData) => async (dispatch) => {
   try {
     const { data } = await AuthApi.signUp(formData);
     dispatch({ type: "AUTH_SUCCESS", data: data  });
+
+    console.log("after");
+        dispatch(
+          logIn({ username: formData.username, password: formData.password })
+        );
+
   } catch (error) {
   const errorMessage = error.response.data.message;  
     dispatch({ type: "AUTH_FAIL", payload: errorMessage });

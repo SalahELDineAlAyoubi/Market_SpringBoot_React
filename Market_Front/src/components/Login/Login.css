@@ -81,7 +81,16 @@
     width: 100%;
     outline: none;
 }
-
+#container select {
+    background-color: #eee;
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
+}
 .form-container{
     position: absolute;
     top: 0;
@@ -259,6 +268,15 @@
         width: 120%;
         outline: none;
     }
+         #container select {
+             border: none;
+             margin: 8px 0;
+             padding: 10px 15px;
+             font-size: 10px;
+             border-radius: 8px;
+             width: 120%;
+             outline: none;
+         }
     #container button{
         background-color: #f12711;
         color: #fff;
