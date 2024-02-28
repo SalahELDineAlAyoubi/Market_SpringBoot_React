@@ -68,6 +68,7 @@ public class ProductService {
         return  productMapper.toResDto(entity);
     }
 
+
    public List<ProductDtoResponse> getAllProducts(){
        List<Product> all = this.productRepository.findAll();
        if(all.isEmpty()){
@@ -76,7 +77,14 @@ public class ProductService {
        return this.productMapper.toDTOs(all);
 
    }
+ public List<ProductDtoResponse> getProductsByCategory(Integer categoryId){
+       List<Product> all = this.productRepository.findAllByCategoryId(categoryId);
+       if(all.isEmpty()){
+           return null ;
+       }
+       return this.productMapper.toDTOs(all);
 
+   }
 
     public  ProductDtoRequest  getProductById(Integer productId) {
         Optional<Product> reg =  productRepository.findById(productId);
@@ -121,13 +129,6 @@ public class ProductService {
         }
     }
 
-
-//Tmp method Test
-    public boolean deleteAllproducts() {
-
-        productRepository.deleteAll();
-return  true ;
-    }
 
 }
 

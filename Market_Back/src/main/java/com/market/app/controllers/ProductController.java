@@ -46,6 +46,20 @@ public class ProductController {
 
     }
 
+
+    @GetMapping("get-all/{categoryId}")
+    public  ResponseEntity<?>  GetProductsByCategory(@PathVariable Integer categoryId)
+    {
+
+        var result =  productService.getProductsByCategory(categoryId);
+        if(result != null) {
+            return ResponseEntity.ok(result);
+        }
+        else   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No products");
+
+
+    }
+
     @GetMapping("{productId}")
     public ResponseEntity<?>  getProduct(@PathVariable Integer productId) {
         var result= productService.getProductById(productId);
@@ -73,13 +87,5 @@ public class ProductController {
 
 
 
-//Tmp method
-    @DeleteMapping("delete-all")
-    public  ResponseEntity<?>  deleteAllProducts()
-    {
-        var result =  productService.deleteAllproducts();
-        return ResponseEntity.ok(result);
-
-    }
 
 }

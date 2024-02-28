@@ -5,8 +5,22 @@ import { FaSearch } from "react-icons/fa";
 import './Home.css'
 import ProductCard from "./Card/ProductCard";
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllByCategory } from '../../redux/actions/ProductAction';
 const Home = () => {
-     
+       const dispatch = useDispatch();
+
+  const { products, loading } = useSelector((state) => state.productReducer);
+
+
+ useEffect(() => {
+   dispatch(getAllByCategory(1));
+ }, []);
+ 
+
+
+
+
   return (
     <div className="homeBody">
       <header className="masthead">
@@ -31,15 +45,9 @@ const Home = () => {
                 Category
               </button>
               <div className="dropdown-menu">
-                <Link className="dropdown-item dropItem">
-                  Chapter 1
-                </Link>
-                <Link className="dropdown-item dropItem">
-                  Chapter 2
-                </Link>
-                <Link className="dropdown-item dropItem" >
-                  Chapter 3
-                </Link>
+                <Link className="dropdown-item dropItem">Chapter 1</Link>
+                <Link className="dropdown-item dropItem">Chapter 2</Link>
+                <Link className="dropdown-item dropItem">Chapter 3</Link>
               </div>
             </div>
           </div>
@@ -66,8 +74,8 @@ const Home = () => {
 
       <div className="container-fluid ">
         <div className="row row-cols-1 row-cols-md-3 g-4  ">
-          {[...Array(10)].map((_, index) => (
-            <ProductCard key={index} />
+          {products.map((item) => (
+            <ProductCard key={item.id} loading={loading} item={item} />
           ))}
         </div>
       </div>
