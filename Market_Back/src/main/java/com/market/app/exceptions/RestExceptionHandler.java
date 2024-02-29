@@ -17,10 +17,19 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(AlreadyExistException.class)
-    public ResponseEntity<ErrorResponse> handleNotFoundException(AlreadyExistException exc) {
+    public ResponseEntity<ErrorResponse> handleAlreadyExistExceptionException(AlreadyExistException exc) {
         ErrorResponse error = new ErrorResponse();
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setMessage("Item Already Exist : " + exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmptyList.class)
+    public ResponseEntity<ErrorResponse> handleEmptyListException(EmptyList exc) {
+        ErrorResponse error = new ErrorResponse();
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage("The list is Empty: " + exc.getMessage());
         error.setTimeStamp(System.currentTimeMillis());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }

@@ -47,13 +47,31 @@ public CategoryDto addCategory(String name){
 
 
 
-    public Category getCategoryById(Integer categoryId) {
+    public CategoryDto getCategoryById(Integer categoryId) {
         Optional<Category> cat =  categoryRepository.findById(categoryId);
+        var categoryDto = categoryMapper.toDto(cat.get()) ;
+        if(categoryDto !=null) {
+           return categoryDto ;
+        }
+        else{
+            throw  new NotFoundException("Category not found - " + categoryId);
+        }
+        }
 
-        return cat.orElseThrow(() -> new NotFoundException("Category not found - " + categoryId));
 
 
-    }
+   public List<CategoryDto> getAllCategories() {
+        List<Category> all =  categoryRepository.findAll();
+        List<CategoryDto> allDto= categoryMapper.toDTOs(all);
+        if(!allDto.isEmpty()) {
+           return allDto ;
+        }
+        else{
+            throw  new AlreadyExistException("there are no categories " );
+        }
+        }
+
+
 
 
 

@@ -1,5 +1,5 @@
 import jquery from 'jquery';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaSearch } from "react-icons/fa";
 
 import './Home.css'
@@ -7,17 +7,28 @@ import ProductCard from "./Card/ProductCard";
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllByCategory } from '../../redux/actions/ProductAction';
+import { getAllCategories } from '../../redux/actions/CategoryAction';
+import AllCards from './AllCards/AllCards';
 const Home = () => {
        const dispatch = useDispatch();
 
-  const { products, loading } = useSelector((state) => state.productReducer);
-
-
+ 
+   const { categories, loadingCat } = useSelector(
+     (state) => state.categoryReducer
+  );
+ 
+    
  useEffect(() => {
-   dispatch(getAllByCategory(1));
- }, []);
+   dispatch(getAllCategories());
+   // dispatch(getAllByCategory(1));
+ }, [dispatch]);
  
 
+  
+
+
+
+ 
 
 
 
@@ -33,23 +44,30 @@ const Home = () => {
         <div className="row">
           <div className=" col-md-1"></div>
           <div className="col-12 col-sm-6 col-md-4">
-            <div className="btn-group dropright">
-              <button
-                type="button"
-                id="categoryButton"
-                className="btn btn-warning  btn-lg dropdown-toggle text-light"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Category
-              </button>
-              <div className="dropdown-menu">
-                <Link className="dropdown-item dropItem">Chapter 1</Link>
-                <Link className="dropdown-item dropItem">Chapter 2</Link>
-                <Link className="dropdown-item dropItem">Chapter 3</Link>
+            {loadingCat ? (
+              "lll"
+            ) : (
+              <div className="btn-group dropright">
+                <button
+                  type="button"
+                  id="categoryButton"
+                  className="btn btn-warning  btn-lg dropdown-toggle text-light"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Category
+                </button>
+
+                <div className="dropdown-menu">
+                  {categories.map((item) => (
+                    <Link key={item.id} className="dropdown-item dropItem">
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="col-12 col-sm-6 col-md-4" id="searchBody">
             <div className="input-group input-group-lg mb-5">
@@ -72,13 +90,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="container-fluid ">
-        <div className="row row-cols-1 row-cols-md-3 g-4  ">
-          {products.map((item) => (
-            <ProductCard key={item.id} loading={loading} item={item} />
-          ))}
-        </div>
-      </div>
+      <AllCards></AllCards>
     </div>
   );
 }

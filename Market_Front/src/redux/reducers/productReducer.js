@@ -1,12 +1,10 @@
 const productReducer = (
   state = {
     products: [],
-    product: {},
-    updateLoading: false,
-    loading: false,
+    //product: {},
+     loading: false,
     error: false,
-    uploading: false,
-  },
+   },
   action
 ) => {
   switch (action.type) {

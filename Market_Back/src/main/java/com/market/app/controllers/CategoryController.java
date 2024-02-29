@@ -3,6 +3,7 @@ package com.market.app.controllers;
 
  import com.market.app.dataModels.Category;
  import com.market.app.dataModels.Region;
+ import com.market.app.dto.arg.CategoryDto;
  import com.market.app.services.CategoryService;
  import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,8 +35,14 @@ public class CategoryController {
 
 
     @GetMapping("{categoryId}")
-    public ResponseEntity<Category>  getCategory(@PathVariable Integer categoryId) {
+    public ResponseEntity<CategoryDto>  getCategory(@PathVariable Integer categoryId) {
         var result= categoryService.getCategoryById(categoryId);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<CategoryDto> >  getAllCategories() {
+        var result= categoryService.getAllCategories();
         return ResponseEntity.ok(result);
     }
 

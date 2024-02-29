@@ -103,6 +103,8 @@ const handleSubmit = async (e) => {
 
    setislogin(true);
    dispatch(logIn(data));
+        setError("");
+
    if(resData?.user==null){
          setError("Invalid Info");
 
