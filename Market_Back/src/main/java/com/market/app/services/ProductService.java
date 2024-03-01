@@ -123,11 +123,13 @@ public class ProductService {
             Path filePath = Paths.get(uploadDir, randomFilename);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-            return filePath.toString();
+            return randomFilename.toString();
         } catch (Exception e) {
             throw new RuntimeException("Failed to store file", e);
         }
     }
+
+
 
 
 }

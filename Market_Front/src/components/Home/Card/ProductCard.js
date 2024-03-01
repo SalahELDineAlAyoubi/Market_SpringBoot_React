@@ -26,6 +26,7 @@ const ProductCard = ({ item, loading }) => {
       ) : (
         <div className="card mb-4 card1" id="card1">
           <img
+            src={"Images/" + item.imageUrl}
             className="card-img-top"
             id="card-img-top"
             alt="..."
