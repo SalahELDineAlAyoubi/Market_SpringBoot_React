@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllByCategory } from '../../../redux/actions/ProductAction';
 import ProductCard from '../Card/ProductCard';
 
-const AllCards = () => {
-           const dispatch = useDispatch();
+const AllCards = ({ categoryId }) => {
+  const dispatch = useDispatch();
 
-    const { products, loading } = useSelector((state) => state.productReducer);
-     useEffect(() => {
-       //dispatch(getAllCategories());
-       dispatch(getAllByCategory(1));
-     }, []);
- 
+  const { products, loading } = useSelector((state) => state.productReducer);
+  useEffect(() => {
+    //dispatch(getAllCategories());
+    dispatch(getAllByCategory(categoryId));
+  }, [categoryId]);
+
   return (
     <div>
       <div className="container-fluid ">
@@ -23,6 +23,6 @@ const AllCards = () => {
       </div>
     </div>
   );
-}
+};
 
 export default AllCards

@@ -2,22 +2,22 @@ const categoryReducer = (
   state = {
     categories: [],
     category: {},
-    updateLoading: false,
+    
     loadingCat: false,
   },
   action
 ) => {
   switch (action.type) {
-    case "RETREIVING_START":
+    case "RETREIVING_CATEGORIES_START":
       return { ...state, loadingCat: true, error: false };
-    case "RETREIVING_SUCCESS":
+    case "RETREIVING_CATEGORIES_SUCCESS":
       return {
         ...state,
         categories: action.data,
         loadingCat: false,
         error: false,
       };
-    case "RETREIVING_FAIL":
+    case "RETREIVING_CATEGORIES_FAIL":
       return { ...state, loadingCat: false, error: true };
 
     default:

@@ -11,21 +11,21 @@ import { getAllCategories } from '../../redux/actions/CategoryAction';
 import AllCards from './AllCards/AllCards';
 const Home = () => {
        const dispatch = useDispatch();
+  const [selectedCategory, setSelectedCategory] = useState();
+  
 
  
    const { categories, loadingCat } = useSelector(
      (state) => state.categoryReducer
   );
- 
+ const [nameCategory, setNameCategory] = useState(categories[0].name);
     
- useEffect(() => {
-   dispatch(getAllCategories());
-   // dispatch(getAllByCategory(1));
- }, [dispatch]);
- 
-
+useEffect(() => {
+  dispatch(getAllCategories());
+}, []);
   
-
+ 
+ 
 
 
  
@@ -44,30 +44,36 @@ const Home = () => {
         <div className="row">
           <div className=" col-md-1"></div>
           <div className="col-12 col-sm-6 col-md-4">
-            {loadingCat ? (
-              "lll"
-            ) : (
-              <div className="btn-group dropright">
-                <button
-                  type="button"
-                  id="categoryButton"
-                  className="btn btn-warning  btn-lg dropdown-toggle text-light"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Category
-                </button>
+            <div className="btn-group dropright">
+              <button
+                type="button"
+                id="categoryButton"
+                className="btn btn-warning  btn-lg dropdown-toggle text-light"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {nameCategory}
+              </button>
 
-                <div className="dropdown-menu">
-                  {categories.map((item) => (
-                    <Link key={item.id} className="dropdown-item dropItem">
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
+              <div className="dropdown-menu">
+                {categories.map((item) => (
+                  <Link
+                    key={item.id}
+                    className={`dropdown-item dropItem ${
+                      item.id === selectedCategory ? "active" : ""
+                    }`}
+                    onClick={() => {
+                      setSelectedCategory(item.id);
+                      setNameCategory(item.name)
+                      console.log(selectedCategory);
+                    }}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
               </div>
-            )}
+            </div>
           </div>
           <div className="col-12 col-sm-6 col-md-4" id="searchBody">
             <div className="input-group input-group-lg mb-5">
@@ -89,8 +95,7 @@ const Home = () => {
           <div className="col-md-1"></div>
         </div>
       </div>
-
-      <AllCards></AllCards>
+      <AllCards categoryId={selectedCategory}></AllCards>
     </div>
   );
 }
