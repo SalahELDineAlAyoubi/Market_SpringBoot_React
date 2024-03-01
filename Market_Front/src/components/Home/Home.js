@@ -12,7 +12,8 @@ import AllCards from './AllCards/AllCards';
 const Home = () => {
        const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState();
-  
+  const [searchTerm, setSearchTerm] = useState("");
+
 
  
    const { categories, loadingCat } = useSelector(
@@ -21,12 +22,16 @@ const Home = () => {
  const [nameCategory, setNameCategory] = useState(categories[0].name);
     
 useEffect(() => {
-  dispatch(getAllCategories());
+ dispatch(getAllCategories());
+   
 }, []);
   
  
  
-
+// useEffect(() => {
+//   dispatch(getAllCategories());
+// }, []);
+  
 
  
 
@@ -65,7 +70,7 @@ useEffect(() => {
                     }`}
                     onClick={() => {
                       setSelectedCategory(item.id);
-                      setNameCategory(item.name)
+                      setNameCategory(item.name);
                       console.log(selectedCategory);
                     }}
                   >
@@ -84,6 +89,7 @@ useEffect(() => {
                 placeholder="Search..."
                 aria-label="Search"
                 aria-describedby="append"
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <div className="input-group-append">
                 <div className="btn btn-info" id="btnsearch">
@@ -95,7 +101,10 @@ useEffect(() => {
           <div className="col-md-1"></div>
         </div>
       </div>
-      <AllCards categoryId={selectedCategory}></AllCards>
+      <AllCards
+        categoryId={selectedCategory}
+        searchFilter={searchTerm}
+      ></AllCards>
     </div>
   );
 }

@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllByCategory } from '../../../redux/actions/ProductAction';
+import { getAllByCategoriesContains, getAllByCategory } from '../../../redux/actions/ProductAction';
 import ProductCard from '../Card/ProductCard';
 
-const AllCards = ({ categoryId }) => {
+const AllCards = ({ categoryId, searchFilter }) => {
   const dispatch = useDispatch();
 
   const { products, loading } = useSelector((state) => state.productReducer);
   useEffect(() => {
     //dispatch(getAllCategories());
-    dispatch(getAllByCategory(categoryId));
-  }, [categoryId]);
+    if (searchFilter==="") dispatch(getAllByCategory(categoryId));
+   else  dispatch(getAllByCategoriesContains(categoryId, searchFilter));
+  }, [categoryId, searchFilter]);
 
   return (
     <div>

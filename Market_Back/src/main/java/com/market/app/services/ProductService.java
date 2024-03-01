@@ -25,6 +25,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 
@@ -77,6 +78,7 @@ public class ProductService {
        return this.productMapper.toDTOs(all);
 
    }
+
  public List<ProductDtoResponse> getProductsByCategory(Integer categoryId){
        List<Product> all = this.productRepository.findAllByCategoryId(categoryId);
        if(all.isEmpty()){
@@ -85,7 +87,16 @@ public class ProductService {
        return this.productMapper.toDTOs(all);
 
    }
+ public List<ProductDtoResponse> getProductsByCategoryContains(Integer categoryId,String nameProduct){
+     List<ProductDtoResponse> all = getProductsByCategory(categoryId);
+     if (all == null) {
+         return null;
+     }
+     return all.stream()
+             .filter(product -> product.getName().toLowerCase().contains(nameProduct.toLowerCase()))
+             .collect(Collectors.toList());
 
+   }
     public  ProductDtoRequest  getProductById(Integer productId) {
         Optional<Product> reg =  productRepository.findById(productId);
 

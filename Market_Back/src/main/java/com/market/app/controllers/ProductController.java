@@ -60,6 +60,20 @@ public class ProductController {
 
     }
 
+    @GetMapping("get-all/{categoryId}/{nameProduct}")
+    public  ResponseEntity<?>  GetProductsByCategoryContains(@PathVariable Integer categoryId,@PathVariable String nameProduct)
+    {
+
+        var result =  productService.getProductsByCategoryContains(categoryId,nameProduct);
+        if(result != null) {
+            return ResponseEntity.ok(result);
+        }
+        else   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No products");
+
+
+    }
+
+
     @GetMapping("{productId}")
     public ResponseEntity<?>  getProduct(@PathVariable Integer productId) {
         var result= productService.getProductById(productId);
