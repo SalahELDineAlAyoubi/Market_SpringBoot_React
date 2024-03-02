@@ -19,8 +19,8 @@ const Navbar = () => {
    useEffect(() => {
      setIsAdmin(data.user?.authorities[0]?.roleId === 1);
    }, [isAdmin, data]);
-console.log( isAdmin );
-  useEffect(() => {
+
+   useEffect(() => {
     
     (function ($) {
       "use strict";
@@ -133,10 +133,13 @@ console.log( isAdmin );
               ) : (
                 <div></div>
               )}
-              { isAdmin ? (
+              {isAdmin ? (
                 <li className="nav-item">
-                  <Link to={"/"} className="nav-link js-scroll-trigger">
-                    Categories
+                  <Link
+                    to={"/add-product"}
+                    className="nav-link js-scroll-trigger"
+                  >
+                    Add Product
                   </Link>
                 </li>
               ) : (
@@ -159,6 +162,12 @@ console.log( isAdmin );
                   </Link>
                 </li>
               )}
+
+              <li className="nav-item">
+                <Link to={"/edit-product"} className="nav-link js-scroll-trigger">
+                 test
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

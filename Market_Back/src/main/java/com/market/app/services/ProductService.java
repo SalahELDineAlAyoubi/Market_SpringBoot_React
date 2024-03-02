@@ -15,6 +15,7 @@ import com.market.app.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -80,7 +81,7 @@ public class ProductService {
    }
 
  public List<ProductDtoResponse> getProductsByCategory(Integer categoryId){
-       List<Product> all = this.productRepository.findAllByCategoryId(categoryId);
+       List<Product> all = this.productRepository.findAllByCategoryId(categoryId, Sort.by(Sort.Direction.DESC, "updatedAt"));
        if(all.isEmpty()){
            return null ;
        }
@@ -97,18 +98,28 @@ public class ProductService {
              .collect(Collectors.toList());
 
    }
-    public  ProductDtoRequest  getProductById(Integer productId) {
-        Optional<Product> reg =  productRepository.findById(productId);
+//    public  ProductDtoRequest  getProductById(Integer productId) {
+//        Optional<Product> reg =  productRepository.findById(productId);
+//
+//        if(reg.isPresent()){
+//            return  productMapper.toDTO(reg.get());
+//        }
+//         else {
+//            throw new NotFoundException("Product not found - "+ productId);
+//        }
+//
+//    }
+public  Product  getProductById(Integer productId) {
+    Optional<Product> reg =  productRepository.findById(productId);
 
-        if(reg.isPresent()){
-            return  productMapper.toDTO(reg.get());
-        }
-         else {
-            throw new NotFoundException("Product not found - "+ productId);
-        }
-
+    if(reg.isPresent()){
+        return   reg.get() ;
+    }
+    else {
+        throw new NotFoundException("Product not found - "+ productId);
     }
 
+}
 
 /*
     public  ProductDtoRequest  updateProduct( ProductDtoRequest request) {

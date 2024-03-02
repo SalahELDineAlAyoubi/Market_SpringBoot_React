@@ -32,3 +32,21 @@ export const getAllByCategoriesContains = (id, searchFilter) => async (dispatch)
     dispatch({ type: "RETREIVING_PRODUCTS_FILTERED_FAIL" });
   }
 };
+
+
+
+export const addProduct = (productData, categoryId, token) => async (dispatch) => {
+   console.log("Action add product : ", productData);
+  console.log("Action add product : ", categoryId);
+
+  dispatch({ type: "ADD_PRODUCT_START" });
+  try {
+    const { data } = await ProductsApi.addProduct(productData, categoryId,token);
+    console.log("Action add product : ", data);
+
+    dispatch({ type: "ADD_PRODUCT_SUCCESS", data: data });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "ADD_PRODUCT_FAIL" });
+  }
+};

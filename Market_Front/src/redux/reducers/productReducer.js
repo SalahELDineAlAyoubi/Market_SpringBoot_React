@@ -2,9 +2,11 @@ const productReducer = (
   state = {
     products: [],
     //product: {},
-     loading: false,
+    uploadedProd: {},
+    loading: false,
+    uploading: false,
     error: false,
-   },
+  },
   action
 ) => {
   switch (action.type) {
@@ -21,6 +23,18 @@ const productReducer = (
       return { ...state, products: action.data, loading: false, error: false };
     case "RETREIVING_PRODUCTS_FILTERED_FAIL":
       return { ...state, loading: false, error: true };
+
+    case "ADD_PRODUCT_START":
+      return { ...state, uploading: true, error: false };
+    case "ADD_PRODUCT_SUCCESS":
+      return {
+        ...state,
+        uploadedProd: action.data,
+        uploading: false,
+        error: false,
+      };
+    case "ADD_PRODUCT_FAIL":
+      return { ...state, uploading: false, error: true };
 
     default:
       return state;

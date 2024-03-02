@@ -1,0 +1,31 @@
+.productFormBody {
+    padding-top: 6rem;
+    background-color: #c9d6ff;
+        height: 100dvh;
+        font-family: Arial, Helvetica, sans-serif;
+}
+ 
+
+.btnOrange{
+        border-radius: 50px;
+            width: 120px;
+            background-color: rgb(213, 96, 12);
+            border: none;  
+        color: white;
+                                        font-weight: 20;        }
+
+                       .btnOrange:hover {
+                            background-color: rgba(5, 8, 62, 0.367);
+                            border: none;
+                            color: black;
+                                        font-weight: 200;
+                        }
+
+ 
+    @media(min-width:576px){#formCont{width: 95%}}  
+        @media(min-width:768px){#formCont{width: 85%}}  
+        @media(min-width:992px){#formCont{width: 75%}}  
+        @media(min-width:1200px){#formCont{width: 65%}}
+                        @media(min-width:1400px){#formCont{width: 55%}}
+
+                  

@@ -1,0 +1,5 @@
+@media (max-width: 576px) {
+    .col-text-left {
+        text-align: left;
+    }
+}

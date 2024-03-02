@@ -54,7 +54,7 @@ useEffect(() => {
               <button
                 type="button"
                 id="categoryButton"
-                className="btn btn-warning  btn-lg dropdown-toggle text-light"
+                className="btn btn-warning mb-3 btn-lg dropdown-toggle text-light"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
@@ -62,7 +62,7 @@ useEffect(() => {
                 {nameCategory}
               </button>
 
-              <div className="dropdown-menu">
+              <div className="dropdown-menu ">
                 {categories.map((item) => (
                   <Link
                     key={item.id}

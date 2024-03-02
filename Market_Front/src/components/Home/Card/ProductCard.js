@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './ProductCard.css'
 import { Card, Placeholder } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const ProductCard = ({ item, loading }) => {
- 
+     const data = useSelector((state) => state.authReducer.authData);
+   const [isAdmin, setIsAdmin] = useState(false);
+
+   useEffect(() => {
+     setIsAdmin(data?.user?.authorities[0]?.roleId === 1);
+   }, [isAdmin, data]);
   return (
     <div className="col-12 col-sm-6 col-md-4 col-lg-3">
-      { loading ? (
+      {loading ? (
         <Card style={{ width: "22rem" }}>
           <Card.Img
             variant="top"
@@ -42,9 +49,19 @@ const ProductCard = ({ item, loading }) => {
           </div>
           <div className="mb-5 d-flex justify-content-around">
             <h3>{item.price}$</h3>
-            <button className="btn btn-primary " id="btn-primary">
-              Order
-            </button>
+            {isAdmin ? (
+              <Link to={`./edit-product/${item.id}` } >
+                <button className="btn btn-primary " id="btn-primary">
+                  Edit
+                </button>
+              </Link>
+            ) : (
+              <Link to={data?.user ? "./" : "./login"}>
+                <button className="btn btn-primary " id="btn-primary">
+                  Order
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       )}

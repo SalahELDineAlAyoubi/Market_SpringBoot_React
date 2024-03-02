@@ -15,7 +15,7 @@ const AllCards = ({ categoryId, searchFilter }) => {
 
   return (
     <div>
-      <div className="container-fluid ">
+      <div className="container-fluid px-5">
         <div className="row row-cols-1 row-cols-md-3 g-4  ">
           {products.map((item) => (
             <ProductCard key={item.id} loading={loading} item={item} />

@@ -5,6 +5,7 @@ import com.market.app.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,7 @@ public class ProductController {
     private ProductService productService;
 
 
+   // @PreAuthorize("hasRole('ADMIN')")
 
     @PostMapping("add/{categoryId}")
     public  ResponseEntity<?>  AddProduct(@ModelAttribute ProductDtoRequest request ,

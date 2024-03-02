@@ -1,0 +1,9 @@
+ .accBody:first-child{
+    padding-top: 6rem;
+ }
+ 
+ .accBody:not(:first-child) {
+    padding-top: 1rem;
+ }
+
+ 
