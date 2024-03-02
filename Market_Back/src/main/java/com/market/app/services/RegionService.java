@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RegionService {
@@ -28,10 +29,12 @@ public class RegionService {
         List<Region> all = this.regionRepo.findAll();
             return this.regionMapper.toDTOs(all);
     }
-   public List<Region> getAllRegionsIncludeUser (){
+   public List<Region> getAllRegionsIncludingUsers (){
 
-        List<Region> all = this.regionRepo.findAll();
-            return all;
+        List<Region> allRegions = this.regionRepo.findAll();
+       return allRegions.stream()
+               .filter(region -> !region.getUsers().isEmpty())
+               .collect(Collectors.toList());
     }
 
 

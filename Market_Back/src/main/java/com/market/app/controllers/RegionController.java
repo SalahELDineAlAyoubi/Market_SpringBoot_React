@@ -25,6 +25,10 @@ public class RegionController {
     public List<RegionDtoResponse> getAllRegions(){
         return regionService.getAllRegions();
     }
+  @GetMapping("/include")
+    public List<Region> getAllRegionsIncludingUsers(){
+        return regionService.getAllRegionsIncludingUsers();
+    }
 
 
     @GetMapping("get-region/{regionId}")

@@ -126,7 +126,7 @@ console.log( isAdmin );
               </li>
               {isAdmin ? (
                 <li className="nav-item">
-                  <Link to={"/"} className="nav-link js-scroll-trigger">
+                  <Link to={"/users"} className="nav-link js-scroll-trigger">
                     Users
                   </Link>
                 </li>

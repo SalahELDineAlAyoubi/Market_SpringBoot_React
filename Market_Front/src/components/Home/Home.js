@@ -11,7 +11,6 @@ import { getAllCategories } from '../../redux/actions/CategoryAction';
 import AllCards from './AllCards/AllCards';
 const Home = () => {
        const dispatch = useDispatch();
-  const [selectedCategory, setSelectedCategory] = useState();
   const [searchTerm, setSearchTerm] = useState("");
 
 
@@ -19,6 +18,8 @@ const Home = () => {
    const { categories, loadingCat } = useSelector(
      (state) => state.categoryReducer
   );
+    const [selectedCategory, setSelectedCategory] = useState(categories[0].id);
+
  const [nameCategory, setNameCategory] = useState(categories[0].name);
     
 useEffect(() => {
