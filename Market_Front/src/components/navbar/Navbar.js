@@ -163,11 +163,7 @@ const Navbar = () => {
                 </li>
               )}
 
-              <li className="nav-item">
-                <Link to={"/edit-product"} className="nav-link js-scroll-trigger">
-                 test
-                </Link>
-              </li>
+             
             </ul>
           </div>
         </div>

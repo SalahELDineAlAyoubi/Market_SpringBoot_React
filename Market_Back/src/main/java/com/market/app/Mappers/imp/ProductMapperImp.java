@@ -55,6 +55,7 @@ public class ProductMapperImp  implements ProductMapper {
         productDtoResponse.setImageUrl(entity.getImageUrl());
         productDtoResponse.setCreatedAt(entity.getCreatedAt());
         productDtoResponse.setUpdatedAt(entity.getUpdatedAt());
+        productDtoResponse.setCategoryId(entity.getCategory().getId());
         return productDtoResponse;
     }
 

@@ -17,6 +17,7 @@ public class ProductDtoResponse {
     private String name;
     private double price;
     private int quantity;
+    private int categoryId;
     private String imageUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

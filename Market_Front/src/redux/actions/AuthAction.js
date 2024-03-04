@@ -1,6 +1,7 @@
 import * as AuthApi from "../api/AuthRequest";
 
 export const logIn = (formData) => async (dispatch) => {
+  debugger;
   dispatch({ type: "AUTH_START" });
   try {
     const { data } = await AuthApi.logIn(formData);

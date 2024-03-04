@@ -95,6 +95,7 @@ const goTologin = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+ 
   if (!data.username || !data.password) {
     setError("All fields are required");
   } else {
@@ -243,7 +244,7 @@ console.log(
               <h1 className="h1Login">Welcome Back!</h1>
               <p>Enter your personal details to use all of site features</p>
               <button onClick={goTologin} className="hidden" id="login">
-                Sign In
+                Log In
               </button>
             </div>
             <div className="toggle-panel toggle-right">

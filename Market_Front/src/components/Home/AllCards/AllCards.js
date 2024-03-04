@@ -9,9 +9,9 @@ const AllCards = ({ categoryId, searchFilter }) => {
   const { products, loading } = useSelector((state) => state.productReducer);
   useEffect(() => {
     //dispatch(getAllCategories());
-    if (searchFilter==="") dispatch(getAllByCategory(categoryId));
-   else  dispatch(getAllByCategoriesContains(categoryId, searchFilter));
-  }, [categoryId, searchFilter]);
+    if (searchFilter === "") dispatch(getAllByCategory(categoryId));
+    else dispatch(getAllByCategoriesContains(categoryId, searchFilter));
+  }, [categoryId, searchFilter, dispatch]);
 
   return (
     <div>

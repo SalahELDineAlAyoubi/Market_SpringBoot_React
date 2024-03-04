@@ -50,3 +50,48 @@ export const addProduct = (productData, categoryId, token) => async (dispatch) =
     dispatch({ type: "ADD_PRODUCT_FAIL" });
   }
 };
+
+export const getProductById = (id) => async (dispatch) => {
+
+  dispatch({ type: "GET_PRODUCT_START" });
+  try {
+    const { data } = await ProductsApi.getProductById(id);
+    console.log("Action get product : ", data);
+
+    dispatch({ type: "GET_PRODUCT_SUCCESS", data: data });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "GET_PRODUCT_FAIL" });
+  }
+};
+
+export const editProduct = (productData,categoryId, productId) => async (dispatch) => {
+   dispatch({ type: "UPDATE_PRODUCT_START" });
+  try {
+    const { data } = await ProductsApi.editProduct(
+      productData,categoryId,
+      productId
+    );
+    console.log("Action updateeeeeee product : ", data);
+
+    dispatch({ type: "UPDATE_PRODUCT_SUCCESS", data: data });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "UPDATE_PRODUCT_FAIL" });
+  }
+};
+
+
+export const deleteProduct =
+  (id) => async (dispatch) => {
+    dispatch({ type: "DELETE_PRODUCT_START" });
+    try {
+      const { data } = await ProductsApi.deleteProduct(id);
+      console.log("Action updateeeeeee product : ", data);
+
+      dispatch({ type: "DELETE_PRODUCT_SUCCESS", data: data });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: "DELETE_PRODUCT_FAIL" });
+    }
+  };

@@ -15,15 +15,16 @@ import { Link } from 'react-router-dom';
    const { categories, loadingCat } = useSelector(
      (state) => state.categoryReducer
    );
-
    const [selectedCategoryId, setSelectedCategoryId] = useState(
-     product ? product.selectedCategoryId : categories[0].id
+     product ? product.categoryId : categories[0].id
    );
    const [nameCategory, setNameCategory] = useState(
-     categories[0].id 
+     product ? product.categoryId : categories[0].id
    );
-   const [error, setError] = useState(null);
+  // debugger;
 
+   const [error, setError] = useState(null);
+console.log(selectedCategoryId, nameCategory);
    const handleSubmit = (e) => {
      e.preventDefault();
      if (

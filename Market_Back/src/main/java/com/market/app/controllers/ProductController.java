@@ -48,7 +48,11 @@ public class ProductController {
 
     }
 
-
+    @GetMapping("/available")
+    public ResponseEntity<?> setavailable() {
+        productService.setAvailable();
+        return ResponseEntity.ok("done");
+    }
     @GetMapping("get-all/{categoryId}")
     public  ResponseEntity<?>  GetProductsByCategory(@PathVariable Integer categoryId)
     {
@@ -81,15 +85,19 @@ public class ProductController {
         var result= productService.getProductById(productId);
          return ResponseEntity.ok(result);
     }
-/*
-    @PutMapping("")
-    public ResponseEntity<?> UpdateProduct(@RequestBody ProductDtoRequest request ) {
 
-        var result= productService.updateProduct(request);
+    @PutMapping("{categoryId}/{productId}")
+    public ResponseEntity<?> UpdateProduct(@PathVariable Integer categoryId,
+                                           @PathVariable Integer productId  ,
+                                            @ModelAttribute ProductDtoRequest request ,
+                                           @RequestParam(value = "image", required = false) MultipartFile imageFile
+                                            ) {
+
+        var result= productService.updateProduct(categoryId, productId  ,  request , imageFile);
 
         return ResponseEntity.ok(result);
     }
-*/
+
 
 
 
@@ -101,6 +109,11 @@ public class ProductController {
     }
 
 
+    @DeleteMapping("{productId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Integer productId ) {
+        int id  =productService.deleteProduct(productId);
+        return ResponseEntity.ok(id);
+    }
 
 
 

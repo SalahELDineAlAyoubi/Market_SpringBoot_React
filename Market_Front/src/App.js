@@ -29,7 +29,7 @@ function App() {
 
         <Route
           path="/login"
-          element={data?.user && isAdmin ? <Navigate to="../" /> : <Login />}
+          element={data?.user  ? <Navigate to="../" /> : <Login />}
         ></Route>
 
         <Route

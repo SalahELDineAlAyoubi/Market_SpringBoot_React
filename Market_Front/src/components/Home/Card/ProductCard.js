@@ -1,12 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import './ProductCard.css'
-import { Card, Placeholder } from 'react-bootstrap';
+import { Button, Card, Modal, Placeholder } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-const ProductCard = ({ item, loading }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { FaTrash } from 'react-icons/fa';
+import { deleteProduct } from '../../../redux/actions/ProductAction';
+ const ProductCard = ({ item, loading }) => {
      const data = useSelector((state) => state.authReducer.authData);
    const [isAdmin, setIsAdmin] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+       const dispatch = useDispatch();
 
+    const handleDeleteClick = () => {
+            setShowModal(true);
+    };
+
+    const handleConfirmDelete = () => {
+  
+      dispatch(deleteProduct(item.id));
+      setShowModal(false);
+    };
+
+    const handleCancelDelete = () => {
+      setShowModal(false);
+    };
    useEffect(() => {
      setIsAdmin(data?.user?.authorities[0]?.roleId === 1);
    }, [isAdmin, data]);
@@ -50,7 +67,7 @@ const ProductCard = ({ item, loading }) => {
           <div className="mb-5 d-flex justify-content-around">
             <h3>{item.price}$</h3>
             {isAdmin ? (
-              <Link to={`./edit-product/${item.id}` } >
+              <Link to={`./edit-product/${item.id}`}>
                 <button className="btn btn-primary " id="btn-primary">
                   Edit
                 </button>
@@ -62,6 +79,28 @@ const ProductCard = ({ item, loading }) => {
                 </button>
               </Link>
             )}
+            {isAdmin ? (
+              <FaTrash
+                style={{ color: "black", cursor: "pointer" }}
+                onClick={handleDeleteClick}
+              />
+            ) : (
+              ""
+            )}
+            <Modal show={showModal} onHide={handleCancelDelete}>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirm Delete</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>Are you sure you want to delete?</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCancelDelete}>
+                  Cancel
+                </Button>
+                <Button variant="danger" onClick={handleConfirmDelete}>
+                  Confirm
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       )}

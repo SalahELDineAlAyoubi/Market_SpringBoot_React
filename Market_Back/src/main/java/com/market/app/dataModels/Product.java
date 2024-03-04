@@ -28,6 +28,7 @@ public class Product {
     private double price;
 
     private int quantity;
+    private boolean isAvailable=true;
     private String imageUrl;
 
 
@@ -44,6 +45,14 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
 
     public Product(String name, double price, int quantity, String imageUrl) {
         this.name = name;

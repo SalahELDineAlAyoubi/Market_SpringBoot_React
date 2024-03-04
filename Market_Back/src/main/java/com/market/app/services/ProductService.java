@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Files;
@@ -71,8 +72,17 @@ public class ProductService {
     }
 
 
+//   public List<ProductDtoResponse> getAllProducts(){
+//       List<Product> all = this.productRepository.findAll();
+//       if(all.isEmpty()){
+//           return null ;
+//       }
+//       return this.productMapper.toDTOs(all);
+//
+//   }
+
    public List<ProductDtoResponse> getAllProducts(){
-       List<Product> all = this.productRepository.findAll();
+       List<Product> all = this.productRepository.findAllByIsAvailableTrue();
        if(all.isEmpty()){
            return null ;
        }
@@ -81,7 +91,7 @@ public class ProductService {
    }
 
  public List<ProductDtoResponse> getProductsByCategory(Integer categoryId){
-       List<Product> all = this.productRepository.findAllByCategoryId(categoryId, Sort.by(Sort.Direction.DESC, "updatedAt"));
+       List<Product> all = this.productRepository.findAllByCategoryIdAndIsAvailableTrue(categoryId, Sort.by(Sort.Direction.DESC, "updatedAt"));
        if(all.isEmpty()){
            return null ;
        }
@@ -94,26 +104,16 @@ public class ProductService {
          return null;
      }
      return all.stream()
-             .filter(product -> product.getName().toLowerCase().contains(nameProduct.toLowerCase()))
+             .filter(product -> product.getName().toLowerCase().contains(nameProduct.toLowerCase())   )
              .collect(Collectors.toList());
 
    }
-//    public  ProductDtoRequest  getProductById(Integer productId) {
-//        Optional<Product> reg =  productRepository.findById(productId);
-//
-//        if(reg.isPresent()){
-//            return  productMapper.toDTO(reg.get());
-//        }
-//         else {
-//            throw new NotFoundException("Product not found - "+ productId);
-//        }
-//
-//    }
-public  Product  getProductById(Integer productId) {
+
+public  ProductDtoResponse  getProductById(Integer productId) {
     Optional<Product> reg =  productRepository.findById(productId);
 
     if(reg.isPresent()){
-        return   reg.get() ;
+        return  productMapper.toResDto(reg.get())  ;
     }
     else {
         throw new NotFoundException("Product not found - "+ productId);
@@ -121,15 +121,36 @@ public  Product  getProductById(Integer productId) {
 
 }
 
-/*
-    public  ProductDtoRequest  updateProduct( ProductDtoRequest request) {
+
+    public  ProductDtoResponse  updateProduct(  Integer categoryId,Integer productId  ,ProductDtoRequest request ,MultipartFile imageFile) {
 
 
-        Product  entity = productMapper.toEntity(request);
+        Optional<Product>  entityOptional = productRepository.findById(productId);
+        if (entityOptional.isEmpty()) {
+            throw new NotFoundException("Product Not Found - " + productId);
+        }
 
-        return productMapper.toDTO(productRepository.save(entity)) ;
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+        if (categoryOptional.isEmpty()) {
+            throw new NotFoundException("Category Not Found - " + categoryId);
+        }
+        Product entity = entityOptional.get();
 
-    }*/
+        Category category = categoryOptional.get();
+
+        if( imageFile!=null ){
+            String imageUrl = uploadImage(imageFile);
+            request.setImageUrl(imageUrl);
+            entity.setImageUrl(request.getImageUrl());
+        }
+        entity.setCategory(category);
+        entity.setName(request.getName());
+        entity.setQuantity(request.getQuantity());
+        entity.setPrice(request.getPrice());
+
+        return productMapper.toResDto(productRepository.save(entity)) ;
+
+    }
 
 
 
@@ -151,6 +172,26 @@ public  Product  getProductById(Integer productId) {
         }
     }
 
+
+    public void setAvailable() {
+
+        List<Product> allProducts = productRepository.findAll();
+        allProducts.forEach(product -> product.setAvailable(true));
+        productRepository.saveAll(allProducts);
+    }
+    @Transactional
+    public int deleteProduct(Integer productId) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            product.setAvailable(false);
+            productRepository.save(product);
+            return product.getId();
+        } else {
+            throw new NotFoundException("Product not found - " + productId);
+        }
+    }
 
 
 
