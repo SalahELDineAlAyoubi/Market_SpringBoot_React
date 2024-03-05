@@ -2,5 +2,4 @@
 .usersBody{
 
 background-color: #c9d6ff;
-height: 100dvh;
- }
+min-height: 100vh; }

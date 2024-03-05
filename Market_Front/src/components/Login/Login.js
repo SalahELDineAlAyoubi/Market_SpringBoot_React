@@ -152,7 +152,7 @@ console.log(
       <div className="container" id="container">
         <div className="form-container sign-up">
           <form onSubmit={handleSubmitSignUp}>
-            <h1 className="h1Login">Create Account</h1>
+            <h1 className="h1Login">Sign Up</h1>
 
             <input
               type="text"
@@ -216,7 +216,7 @@ console.log(
 
         <div className="form-container sign-in">
           <form onSubmit={handleSubmit}>
-            <h1 className="h1Login">Sign In</h1>
+            <h1 className="h1Login">Log In</h1>
 
             <input
               type="text"

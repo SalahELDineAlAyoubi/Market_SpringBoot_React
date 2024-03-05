@@ -29,7 +29,7 @@ const EditProduct = (props) => {
         navigate("/"); 
 
     //   console.log("Adding product:", );
-    ///  if (!uploading) navigate("/");
+    // if (!updating) navigate("/");
   };
 
   const EnhancedProductForm = withProductForm(
