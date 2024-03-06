@@ -11,25 +11,27 @@ import { useEffect, useState } from "react";
 import AddProduct from "./components/ProductManage/Add-Product/AddProduct";
 import ProductForm from "./components/ProductManage/ProductForm";
 import EditProduct from "./components/ProductManage/Edit-Product/EditProduct";
+import Categories from "./components/Thymeleaf/categories";
 
 function App() {
   const data = useSelector((state) => state.authReducer.authData);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+ 
     setIsAdmin(data?.user?.authorities[0]?.roleId === 1);
   }, [data]);
  
   return (
     <div className="App">
-      <Navbar isAdmin={isAdmin} />
+      <Navbar isAdmin={isAdmin} token={data?.jwt}/>
 
       <Routes>
         <Route path="/" element={<Home />}></Route>
 
         <Route
           path="/login"
-          element={data?.user  ? <Navigate to="../" /> : <Login />}
+          element={data?.user ? <Navigate to="../" /> : <Login />}
         ></Route>
 
         <Route
@@ -55,6 +57,17 @@ function App() {
             data?.user && isAdmin ? <EditProduct /> : <Navigate to="../" />
           }
         ></Route>
+
+        {/* <Route
+          path="/categories"
+          element={
+            data?.user && isAdmin ? (
+              <Categories />
+            ) : (
+              <Navigate to="../" />
+            )
+          }
+        ></Route> */}
         <Route path="*" element={<Navigate to="../" />} />
       </Routes>
     </div>

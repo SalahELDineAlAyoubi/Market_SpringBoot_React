@@ -6,22 +6,37 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { logout } from '../../redux/actions/AuthAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocalStorage } from 'react-use-storage';
+import axios from 'axios';
+import { getManagement } from '../../redux/api/CategoryRequest';
 
-const Navbar = () => {
-    const location = useLocation();
-        const data = useSelector((state) => state.authReducer.authData) || {}; 
+const Navbar = ({ token }) => {
+  const location = useLocation();
+  const data = useSelector((state) => state.authReducer.authData) || {};
   const [islogin, setislogin, removeislogin] = useLocalStorage("islogin");
-//const [isAdmin, setisAdmin, removeisAdmin] = useLocalStorage("isAdmin", false);
-    const dispatch = useDispatch();
-   const [isAdmin, setIsAdmin] = useState(false);
+  //const [isAdmin, setisAdmin, removeisAdmin] = useLocalStorage("isAdmin", false);
+  const dispatch = useDispatch();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [htmlContent, setHtmlContent] = useState("f");
+console.log(token);
 
- 
-   useEffect(() => {
-     setIsAdmin(data.user?.authorities[0]?.roleId === 1);
-   }, [isAdmin, data]);
 
-   useEffect(() => {
-    
+     useEffect(() => {
+       dispatch(getManagement)
+         .then((response) => {
+           console.log("res", response.data);
+           setHtmlContent(response.data);
+         })
+         .catch((error) => {
+           console.error("Error:", error);
+         });
+     }, [dispatch]);
+
+  
+  useEffect(() => {
+    setIsAdmin(data.user?.authorities[0]?.roleId === 1);
+  }, [isAdmin, data]);
+
+  useEffect(() => {
     (function ($) {
       "use strict";
 
@@ -91,7 +106,7 @@ const Navbar = () => {
   const handleCloseLogout = () => {
     dispatch(logout());
   };
-   
+
   return (
     <div id="top">
       <nav
@@ -145,6 +160,21 @@ const Navbar = () => {
               ) : (
                 <div></div>
               )}
+              {isAdmin ? (
+                <li className="nav-item">
+                  <Link
+                    onClick={() =>
+                      window.open("", "_blank").document.write(htmlContent)
+                    }
+                    
+                    className="nav-link js-scroll-trigger"
+                  >
+                    Categories
+                  </Link>
+                </li>
+              ) : (
+                <div></div>
+              )}
               {islogin && data?.user ? (
                 <li className="nav-item">
                   <Link
@@ -162,8 +192,6 @@ const Navbar = () => {
                   </Link>
                 </li>
               )}
-
-             
             </ul>
           </div>
         </div>

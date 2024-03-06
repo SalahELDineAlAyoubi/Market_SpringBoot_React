@@ -28,6 +28,7 @@ public class CategoryService {
     private CategoryMapper categoryMapper;
 
 
+
 public CategoryDto addCategory(String name){
     Optional<Category> existingCategory= categoryRepository.findByName(name);
 
@@ -44,6 +45,21 @@ public CategoryDto addCategory(String name){
 
 }
 
+public void updateCategory( CategoryDto category){
+    Optional<Category> existingCategory= categoryRepository.findById(category.getId());
+
+    if (!existingCategory.isPresent()) {
+        throw new NotFoundException("Category Nopt  Found with id"+ category.getId());
+    }
+
+    Category entity = existingCategory.get() ;
+    entity.setName(category.getName());
+    categoryRepository.save(entity);
+
+
+
+
+}
 
 
 
