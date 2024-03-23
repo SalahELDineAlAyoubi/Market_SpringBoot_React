@@ -18,9 +18,12 @@ const Home = () => {
    const { categories, loadingCat } = useSelector(
      (state) => state.categoryReducer
   );
+  console.log(categories);
     const [selectedCategory, setSelectedCategory] = useState(categories[0].id);
+    // const [selectedCategory, setSelectedCategory] = useState(1);
 
  const [nameCategory, setNameCategory] = useState(categories[0].name);
+ // const [nameCategory, setNameCategory] = useState("s");
     
 useEffect(() => {
  dispatch(getAllCategories());

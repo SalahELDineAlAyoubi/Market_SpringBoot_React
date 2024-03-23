@@ -25,7 +25,7 @@ public class RegionController {
     public List<RegionDtoResponse> getAllRegions(){
         return regionService.getAllRegions();
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
 
     @GetMapping("/include")
     public List<Region> getAllRegionsIncludingUsers(){

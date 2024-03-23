@@ -163,11 +163,9 @@ console.log(token);
               {isAdmin ? (
                 <li className="nav-item">
                   <Link
-                    onClick={() =>
-                      window.open("", "_blank").document.write(htmlContent)
-                    }
-                    
+                    to={"http://localhost:8081/thymeleaf/get-all"}
                     className="nav-link js-scroll-trigger"
+                    target="_blank"
                   >
                     Categories
                   </Link>
